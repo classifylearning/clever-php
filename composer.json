@@ -1,22 +1,8 @@
 {
-    "name": "GIT_USER_ID/GIT_REPO_ID",
+    "name": "classifylearning/clever",
     "description": "",
-    "keywords": [
-        "swagger",
-        "php",
-        "sdk",
-        "api"
-    ],
-    "homepage": "http://swagger.io",
-    "license": "proprietary",
-    "authors": [
-        {
-            "name": "Swagger and contributors",
-            "homepage": "https://github.com/swagger-api/swagger-codegen"
-        }
-    ],
     "require": {
-        "php": ">=5.5",
+        "php": ">=7.4",
         "ext-curl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
@@ -28,9 +14,15 @@
         "friendsofphp/php-cs-fixer": "~2.2"
     },
     "autoload": {
-        "psr-4": { "Clever\\" : "lib/" }
+        "psr-4": { 
+            "Clever\\" : "lib/" 
+        }
     },
     "autoload-dev": {
-        "psr-4": { "Clever\\" : "test/" }
-    }
+        "psr-4": { 
+            "Clever\\" : "test/" 
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": false
 }
