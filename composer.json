@@ -28,13 +28,13 @@
         "friendsofphp/php-cs-fixer": "~2.2"
     },
     "autoload": {
-        "psr-4": { 
-            "Clever\\" : "lib/" 
+        "psr-4": {
+            "Clever\\" : "lib/"
         }
     },
     "autoload-dev": {
-        "psr-4": { 
-            "Clever\\" : "test/" 
+        "psr-4": {
+            "Clever\\" : "test/"
         }
     }
 }

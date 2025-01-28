@@ -62,6 +62,8 @@ class Student implements ModelInterface, ArrayAccess
         'dob' => 'string',
         'ell_status' => 'string',
         'email' => 'string',
+        'ext' => 'object',
+        'frl_status' => 'string',
         'gender' => 'string',
         'grade' => 'string',
         'graduation_year' => 'string',
@@ -94,6 +96,8 @@ class Student implements ModelInterface, ArrayAccess
         'dob' => 'datetime',
         'ell_status' => null,
         'email' => null,
+        'ext' => null,
+        'frl_status' => null,
         'gender' => null,
         'grade' => null,
         'graduation_year' => null,
@@ -147,6 +151,8 @@ class Student implements ModelInterface, ArrayAccess
         'dob' => 'dob',
         'ell_status' => 'ell_status',
         'email' => 'email',
+        'ext' => 'ext',
+        'frl_status' => 'frl_status',
         'gender' => 'gender',
         'grade' => 'grade',
         'graduation_year' => 'graduation_year',
@@ -179,6 +185,8 @@ class Student implements ModelInterface, ArrayAccess
         'dob' => 'setDob',
         'ell_status' => 'setEllStatus',
         'email' => 'setEmail',
+        'ext' => 'setExt',
+        'frl_status' => 'setFrlStatus',
         'gender' => 'setGender',
         'grade' => 'setGrade',
         'graduation_year' => 'setGraduationYear',
@@ -211,6 +219,8 @@ class Student implements ModelInterface, ArrayAccess
         'dob' => 'getDob',
         'ell_status' => 'getEllStatus',
         'email' => 'getEmail',
+        'ext' => 'getExt',
+        'frl_status' => 'getFrlStatus',
         'gender' => 'getGender',
         'grade' => 'getGrade',
         'graduation_year' => 'getGraduationYear',
@@ -275,6 +285,10 @@ class Student implements ModelInterface, ArrayAccess
     const ELL_STATUS_Y = 'Y';
     const ELL_STATUS_N = 'N';
     const ELL_STATUS_EMPTY = '';
+    const FRL_STATUS_FREE = 'Free';
+    const FRL_STATUS_PAID = 'Paid';
+    const FRL_STATUS_REDUCED = 'Reduced';
+    const FRL_STATUS_EMPTY = '';
     const GENDER_M = 'M';
     const GENDER_F = 'F';
     const GENDER_X = 'X';
@@ -372,6 +386,21 @@ class Student implements ModelInterface, ArrayAccess
             self::ELL_STATUS_Y,
             self::ELL_STATUS_N,
             self::ELL_STATUS_EMPTY,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getFrlStatusAllowableValues()
+    {
+        return [
+            self::FRL_STATUS_FREE,
+            self::FRL_STATUS_PAID,
+            self::FRL_STATUS_REDUCED,
+            self::FRL_STATUS_EMPTY,
         ];
     }
 
@@ -535,6 +564,8 @@ class Student implements ModelInterface, ArrayAccess
         $this->container['dob'] = isset($data['dob']) ? $data['dob'] : null;
         $this->container['ell_status'] = isset($data['ell_status']) ? $data['ell_status'] : null;
         $this->container['email'] = isset($data['email']) ? $data['email'] : null;
+        $this->container['ext'] = isset($data['ext']) ? $data['ext'] : null;
+        $this->container['frl_status'] = isset($data['frl_status']) ? $data['frl_status'] : null;
         $this->container['gender'] = isset($data['gender']) ? $data['gender'] : null;
         $this->container['grade'] = isset($data['grade']) ? $data['grade'] : null;
         $this->container['graduation_year'] = isset($data['graduation_year']) ? $data['graduation_year'] : null;
@@ -568,6 +599,14 @@ class Student implements ModelInterface, ArrayAccess
         if (!in_array($this->container['ell_status'], $allowedValues)) {
             $invalidProperties[] = sprintf(
                 "invalid value for 'ell_status', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getFrlStatusAllowableValues();
+        if (!in_array($this->container['frl_status'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'frl_status', must be one of '%s'",
                 implode("', '", $allowedValues)
             );
         }
@@ -626,6 +665,10 @@ class Student implements ModelInterface, ArrayAccess
 
         $allowedValues = $this->getEllStatusAllowableValues();
         if (!in_array($this->container['ell_status'], $allowedValues)) {
+            return false;
+        }
+        $allowedValues = $this->getFrlStatusAllowableValues();
+        if (!in_array($this->container['frl_status'], $allowedValues)) {
             return false;
         }
         $allowedValues = $this->getGenderAllowableValues();
@@ -801,6 +844,63 @@ class Student implements ModelInterface, ArrayAccess
     public function setEmail($email)
     {
         $this->container['email'] = $email;
+
+        return $this;
+    }
+
+    /**
+     * Gets ext
+     *
+     * @return string[]
+     */
+    public function getExt()
+    {
+        return $this->container['ext'];
+    }
+
+    /**
+     * Sets ext
+     *
+     * @param string[] $ext ext
+     *
+     * @return $this
+     */
+    public function setExt($ext)
+    {
+        $this->container['ext'] = $ext;
+
+        return $this;
+    }
+
+    /**
+     * Gets frl_status
+     *
+     * @return string
+     */
+    public function getFrlStatus()
+    {
+        return $this->container['frl_status'];
+    }
+
+    /**
+     * Sets frl_status
+     *
+     * @param string $frl_status frl_status
+     *
+     * @return $this
+     */
+    public function setFrlStatus($frl_status)
+    {
+        $allowedValues = $this->getFrlStatusAllowableValues();
+        if (!is_null($frl_status) && !in_array($frl_status, $allowedValues)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'frl_status', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['frl_status'] = $frl_status;
 
         return $this;
     }

@@ -10032,6 +10032,8 @@ class DataApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        $queryParams['ext'] = 'true';
 
         // path params
         if ($id !== null) {
@@ -10117,9 +10119,9 @@ class DataApi
      * @throws \InvalidArgumentException
      * @return \Clever\Model\StudentsResponse
      */
-    public function getStudents($limit = null, $starting_after = null, $ending_before = null)
+    public function getStudents($limit = null, $starting_after = null, $ending_before = null, $include_extension_fields = null)
     {
-        list($response) = $this->getStudentsWithHttpInfo($limit, $starting_after, $ending_before);
+        list($response) = $this->getStudentsWithHttpInfo($limit, $starting_after, $ending_before, $include_extension_fields);
         return $response;
     }
 
@@ -10134,10 +10136,10 @@ class DataApi
      * @throws \InvalidArgumentException
      * @return array of \Clever\Model\StudentsResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getStudentsWithHttpInfo($limit = null, $starting_after = null, $ending_before = null)
+    public function getStudentsWithHttpInfo($limit = null, $starting_after = null, $ending_before = null, $include_extension_fields = null)
     {
         $returnType = '\Clever\Model\StudentsResponse';
-        $request = $this->getStudentsRequest($limit, $starting_after, $ending_before);
+        $request = $this->getStudentsRequest($limit, $starting_after, $ending_before, $include_extension_fields);
 
         try {
 
@@ -10283,7 +10285,7 @@ class DataApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getStudentsRequest($limit = null, $starting_after = null, $ending_before = null)
+    protected function getStudentsRequest($limit = null, $starting_after = null, $ending_before = null, $include_extension_fields = null)
     {
 
         $resourcePath = '/students';
@@ -10304,6 +10306,10 @@ class DataApi
         // query params
         if ($ending_before !== null) {
             $queryParams['ending_before'] = ObjectSerializer::toQueryValue($ending_before);
+        }
+        // query params
+        if ($include_extension_fields !== null) {
+            $queryParams['ext'] = 'true';
         }
 
 
